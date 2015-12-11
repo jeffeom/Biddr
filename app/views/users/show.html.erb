@@ -1,0 +1,7 @@
+<h1>Lists of your total bids:</h1>
+
+<% @bids.each do |bid| %>
+<div class="well">
+  <h2 style="font-size: 25px">Title: <%= bid.auction.title %> with bid price of: <%= number_to_currency(bid.bid_price) %></h2>
+</div>
+<% end %>

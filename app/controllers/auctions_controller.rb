@@ -4,21 +4,16 @@ class AuctionsController < ApplicationController
   DEFAULT_REWARD_COUNT = 2
 
   def new
-    @auction = Auction.new
+    if user_signed_in?
+      @auction = Auction.new
+    else
+      redirect_to new_user_session_path, alert:"Log in Please!"
+    end
   end
 
   def create
-    # service = Campaigns::CreateCampaign.new(params: campaign_params,
-    #                                         user:   current_user)
-    # if service.call
-    #   redirect_to campaign_path(service.campaign)
-    # else
-    #   @campaign = service.campaign
-    #   number_to_build = DEFAULT_REWARD_COUNT - @campaign.rewards.size
-    #   number_to_build.times { @campaign.rewards.build }
-    #   render :new
-    # end
     @auction = Auction.new(auction_params)
+    @auction.user = current_user
     if @auction.save
       redirect_to(auction_path(@auction), notice: "Auction created!")
     else
@@ -56,12 +51,10 @@ class AuctionsController < ApplicationController
   end
 
   def destroy
-    # if current_user == @campaign.user
-      @auction.destroy
-      redirect_to campaigns_path
-    # else
-      # redirect_to root_path
-    # end
+    @auction = Auction.find params[:id]
+    @auction.destroy
+    flash[:notice] = "Auction deleted Successfully."
+    redirect_to auctions_path
   end
 
   private

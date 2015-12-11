@@ -2,6 +2,7 @@ class BidsController < ApplicationController
   def create
     @auction = Auction.find(params[:auction_id])
     @bid   = @auction.bids.new bid_params
+    @bid.user = current_user
     if @bid.save
       redirect_to auction_path(@auction), notice: "Please Bid"
     else

@@ -1,4 +1,7 @@
 Rails.application.routes.draw do
+
+  devise_for :users, controllers: {sessions: 'users/sessions', registrations: 'users/registrations', passwords: 'users/passwords'}
+  resources :users, only: [:new, :create, :show]
   resources :auctions do
     resources :bids
     resources :publishings, only: [:create]
