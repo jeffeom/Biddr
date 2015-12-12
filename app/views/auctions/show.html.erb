@@ -51,24 +51,15 @@
 
 <% if @auction.published? %>
   <h2>Make a Bid</h2>
-  <%= simple_form_for [@auction, @bid] do |f| %>
-    <% if current_user == @auction.user%>
-      <h3 style="font-weight: 800; color: red;">You are not possible to bid your own product</h3>
-    <% elsif !user_signed_in?%>
-      <h3 style="font-weight: 800; color: red;">You are not possible to bid. You need to Log In first</h3>
-    <% else %>
-      <%= f.input :bid_price, as: :string %>
-      <%= f.submit "Bid", class: "btn btn-primary" %>
-    <% end %>
-  <% end %>
+  <%= render "/bids/form" %>
   <hr>
   <% if user_signed_in? && current_user != @auction.user %>
     <h2>Previous Bids</h2>
     <br>
-    <% @auction.bids.order('created_at DESC').each do |bid| %>
-      <div class="well">
-        <%= number_to_currency(bid.bid_price) %> at <%= bid.created_at.strftime("%b %d. %Y") %> by <%= bid.user.first_name.capitalize %> <%=   bid.user.last_name.capitalize %>
-      </div>
-    <% end %>
+    <div id="bids">
+      <% @auction.bids.order('created_at DESC').each do |bid| %>
+        <%= render "/bids/bid", bid: bid %>
+      <% end %>
+    </div>
   <% end %>
 <% end %>

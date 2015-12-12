@@ -1,0 +1,4 @@
+$("#bids").prepend("<%= j(render('/bids/bid', {bid: @bid})) %>");
+$("#<%= dom_id(@bid) %>").fadeIn(2000, function(){ $(this).hide().fadeIn("slow");})
+<% @bid = Bid.new %>
+$("#new_bid").replaceWith("<%= j render 'form' %>");

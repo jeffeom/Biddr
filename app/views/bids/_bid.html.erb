@@ -1,0 +1,3 @@
+<div class="well" id="<%= dom_id(bid) %>">
+  <%= number_to_currency(bid.bid_price) %> at <%= bid.created_at.strftime("%b %d. %Y") %> by <%= bid.user.first_name.capitalize %> <%=   bid.user.last_name.capitalize %>
+</div>

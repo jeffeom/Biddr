@@ -1,0 +1,10 @@
+<%= simple_form_for [@auction, @bid], remote: true do |f| %>
+  <% if current_user == @auction.user%>
+    <h3 style="font-weight: 800; color: red;">You are not possible to bid your own product</h3>
+  <% elsif !user_signed_in?%>
+    <h3 style="font-weight: 800; color: red;">You are not possible to bid. You need to Log In first</h3>
+  <% else %>
+    <%= f.input :bid_price, as: :string %>
+    <%= f.submit "Bid", class: "btn btn-primary", data: {disable_with: "Saving..."} %>
+  <% end %>
+<% end %>
