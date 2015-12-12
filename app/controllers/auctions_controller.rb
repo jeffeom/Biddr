@@ -12,12 +12,16 @@ class AuctionsController < ApplicationController
   end
 
   def create
-    @auction = Auction.new(auction_params)
-    @auction.user = current_user
-    if @auction.save
-      redirect_to(auction_path(@auction), notice: "Auction created!")
+    if user_signed_in?
+      @auction = Auction.new(auction_params)
+      @auction.user = current_user
+      if @auction.save
+        redirect_to(auction_path(@auction), notice: "Auction created!")
+      else
+        render :new
+      end
     else
-      render :new
+      redirect_to new_user_registration_path, alert:"Sign up Please"
     end
   end
 

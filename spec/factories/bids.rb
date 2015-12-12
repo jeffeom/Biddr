@@ -1,7 +1,7 @@
 FactoryGirl.define do
   factory :bid do
-    bid_price ""
-user nil
+    association :user, factory: :user
+    sequence(:bid_price) {11 + rand(100000)}
+    auction
   end
-
 end
